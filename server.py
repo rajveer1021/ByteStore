@@ -23,6 +23,9 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         while True:
             raw_data = conn.recv(2048)
             parser = command_parser(raw_data)
+            if parser[3] is not None:
+                conn.sendall(str(parser[3]).encode("utf-8"))
+                continue
             response = storage(action=parser[0], command=parser[1], value = parser[2], database=database)
     
 
