@@ -14,10 +14,10 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             raw_data = conn.recv(2048)
             str_data = raw_data.decode("utf-8")
             command = str_data.split(" ")
-            if command[0] == "SET":
+            if command[0].lower() == "set":
                 database[command[1]] = command[2]
                 response = "OK"
-            elif command[0] == "GET":
+            elif command[0].lower() == "get":
                 response = (database.get(command[1], "Key not found"))
             else:
                 response = "Unknown Command"
