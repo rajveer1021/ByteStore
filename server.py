@@ -26,6 +26,12 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                     response = "OK"
                 else:
                     response = "Key not found"
+            elif command[0].lower() == "exists":
+                key = command[1]
+                if key in database:
+                    response = "1"
+                else:
+                    response = "0"
             else:
                 response = "Unknown Command"
 
