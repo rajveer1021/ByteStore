@@ -1,30 +1,29 @@
-# Commmand parser
+# Command parser
 
-def command_parser(command, database):
-    if command[0].lower() == "set":
-        database[command[1]] = command[2]
-        response = "OK"
-    elif command[0].lower() == "get":
-        response = (database.get(command[1], "Key not found"))
-    elif command[0].lower() == "del":
-        key = command[1]
-        if key in database:
-            database.pop(key)
-            response = "OK"
-        else:
-            response = "Key not found"
-    elif command[0].lower() == "exists":
-        key = command[1]
-        if key in database:
-            response = "1"
-        else:
-            response = "0"
-    elif command[0].lower() == "keys":
-        keys = list(database.keys())
-        response = str(keys) if keys else "No keys found"
+def command_parser(raw_data):
+    parts = raw_data.split(b" ", 2)
 
+    if len(parts) == 3:
+        action_byte, command_byte, value_byte = parts
+        action = action_byte.decode("utf-8")
+        command = command_byte.decode("utf-8")
+        value_str = value_byte.decode("utf-8")
+        try:
+            if "." in value_str:
+                value = float(value_str)
+            else:
+                value = int(value_str)
+        except ValueError:
+            value = value_str
+    elif len(parts) == 2:
+        action_byte, command_byte = parts
+        action = action_byte.decode("utf-8")
+        command = command_byte.decode("utf-8")
+        value = None
     else:
-        response = "Unknown Command"
-    
-    return response
-            
+        action_byte = parts[0]
+        action = action_byte.decode("utf-8")
+        command = None
+        value = None
+
+    return action, command, value
