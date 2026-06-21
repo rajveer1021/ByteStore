@@ -1,7 +1,6 @@
 # Storage 
-database = dict()
 
-def storage(action, command=None, value=None):
+def storage(action, command=None, value=None, database = None):
     if action.lower() == "set":
         database[command] = value
         response = "OK"
