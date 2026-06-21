@@ -19,6 +19,13 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 response = "OK"
             elif command[0].lower() == "get":
                 response = (database.get(command[1], "Key not found"))
+            elif command[0].lower() == "del":
+                key = command[1]
+                if key in database:
+                    database.pop(key)
+                    response = "OK"
+                else:
+                    response = "Key not found"
             else:
                 response = "Unknown Command"
 
