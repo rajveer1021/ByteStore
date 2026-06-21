@@ -25,6 +25,12 @@ def storage(action, command=None, value=None):
         response = str(keys) if keys else "No keys found"
     elif action.lower() == "db":
         response = str(database)
+    elif action.lower() == "incr":
+        if isinstance(database.get(command), int):
+            database[command] = database.get(command)+1
+            response = "OK"
+        else:
+            response = "Value error"
 
     else:
         response = "Unknown Command"
