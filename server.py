@@ -17,7 +17,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             if command[0] == "SET":
                 database[command[1]] = command[2]
                 response = "OK"
-            if command[0] == "GET":
+            elif command[0] == "GET":
                 response = (database.get(command[1], "Key not found"))
             else:
                 response = "Unknown Command"
