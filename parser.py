@@ -19,6 +19,10 @@ def command_parser(command, database):
             response = "1"
         else:
             response = "0"
+    elif command[0].lower() == "keys":
+        keys = list(database.keys())
+        response = str(keys) if keys else "No keys found"
+
     else:
         response = "Unknown Command"
     
