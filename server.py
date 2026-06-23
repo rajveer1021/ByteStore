@@ -31,7 +31,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
 
             if not raw_data:
                 json_response = json.dumps(database)
-                with open("database.json", "+a") as file:
+                with open("database.json", "w") as file:
                     file.write(json_response)
                 print("Data saved successfully")
                 break
