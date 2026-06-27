@@ -1,6 +1,8 @@
 # Storage 
+import json
+from config import logger
 
-def storage(action, command=None, value=None, database = None):
+def db_operation(action, command=None, value=None, database = None):
     if action.lower() == "set":
         if command is None or value is None:
             return "Command and value required for SET"
@@ -46,6 +48,19 @@ def storage(action, command=None, value=None, database = None):
     else:
         response = "Unknown Command"
 
-    print("database logs : ", database)
+    logger.info(f"database logs : {database}")
 
     return response
+
+def get_database():
+    try:
+        with open("database.json", "r") as db:
+            database = json.load(db)
+            return database
+    except FileNotFoundError:
+        return dict()
+    
+def save_database(database):
+    with open("database.json", "w+") as file:
+        json.dump(database, file)   
+    logger.info("Data saved successfully")

@@ -7,4 +7,4 @@ def parse_value(value_str):
         try:
             return float(value_str)
         except ValueError:
-            return value_str
+            return value_str.decode("utf-8")
